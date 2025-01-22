@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="./Pictures/Logo.png">
+    <link rel="stylesheet" href="CSS/Dark.css" id="CSSLinker">
+    <title>مسابقة أفضل لاعب بيس 2024</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <header id="header">
+        <h3 id="dateHeading"></h3>
+        <div class="header-box">
+            <p>المسابقة</p>
+            <img src="./Pictures/Logo.png">
+        </div>
+    </header>
+    <div class="setting-massage" id="MassageBoxSuccessed">
+        <p><i class="fa-regular fa-circle-check"></i></p>
+        <p>.شكرا علي تعليقك, تم الإرسال بنجاح</p>
+    </div>
+    <div class="add-massage-box" id="AddMassageBox">
+        <div class="add-massage-box-content">
+            <div class="add-massage-box-header">
+                <button id="Massageclosebtn" class="add-massage-box-close"><i class="fa-solid fa-xmark"></i></button>
+                <p>إنشاء منشور</p>
+                <img id="massageImage" src="./Pictures/match image.png">
+            </div>
+            <form class="formcarryForm" action="https://formcarry.com/s/cxCCDurGK1r" enctype="multipart/form-data">
+                <input required style="display: none;" type="text" name="Profile Name" id="ProfileMassageName">
+                <textarea title="ادخل محتوي الرسالة" required name="The Massage"
+                    placeholder="أدخل محتوي المنشور"></textarea>
+                <input class="massage-input" type="submit" value="نشر">
+            </form>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <script>
+                let ProfileMassageName = document.querySelector("#ProfileMassageName");
+                let MassageBoxSuccessed = document.getElementById("MassageBoxSuccessed");
+                ProfileMassageName.value = window.localStorage.getItem("UserName");
+                $(function () {
+                    $(".formcarryForm").submit(function (e) {
+                        e.preventDefault();
+                        let href = $(this).attr("action");
+
+                        $.ajax({
+                            type: "POST",
+                            url: href,
+                            data: new FormData(this),
+                            dataType: "json",
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                if (response.status == "success") {
+                                    MassageBoxSuccessed.style.top = "40px";
+                                    setTimeout(() => {
+                                        MassageBoxSuccessed.style.top = "-40px";
+                                    }, 3000);
+                                    AddMassageBox.style.display = "none";
+                                }
+                                else if (response.code === 422) {
+                                    alert("يرجا التاكد من الحقول");
+                                    $.each(response.errors, function (key) {
+                                        $('[name="' + key + '"]').addClass('formcarry-field-error');
+                                    });
+                                }
+                                else {
+                                    alert("An error occured: " + response.message);
+                                }
+                            },
+                            error: function (jqXHR, textStatus) {
+                                const errorObject = jqXHR.responseJSON
+
+                                alert("Request failed, " + errorObject.title + ": " + errorObject.message);
+                            },
+                            complete: function () {
+                                console.log("Done")
+                            }
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <div class="Massageclosebtn" id="Massageclosebtnfull"></div>
+    </div>
+    <div class="setting-massage" id="SettingMassage">
+        <p><i class="fa-regular fa-circle-check"></i></p>
+        <p>تم تحديث إعدادات التفضيل</p>
+    </div>
+    <div class="setting-massage" id="capeweblinkmassage">
+        <p><i class="fa-regular fa-circle-check"></i></p>
+        <p>تم النسخ الي الحافظة</p>
+    </div>
+    <div class="setting-massage" id="ratewebsitemassage">
+        <p><i class="fa-regular fa-circle-check"></i></p>
+        <p>شكراً علي تقييمك</p>
+    </div>
+    <div class="wedget-box" id="MatchHeaderBox">
+        <div style="height:fit-content;" class="wedget-content">
+            <button class="hover" id="WadgetBtn">غير مهتم بهذه المباراة <i
+                    class="fa-regular fa-bell-slash"></i></button>
+        </div>
+        <div id="WadgetBtnClose" class="wadget-btn-close"></div>
+    </div>
+    <div class="wedget-box" id="contactmebox">
+        <div style="height:fit-content;" class="wedget-content">
+            <button class="hover" id="capynumber">
+                <p>01095077036 : الرقم</p>
+            </button>
+        </div>
+        <div id="contactmeboxClose" class="wadget-btn-close"></div>
+    </div>
+    <div class="wedget-box" id="ratewebsite">
+        <div style="height:fit-content;" class="wedget-content">
+            <button>
+                <i id="starone" style="margin:5px;font-size: 19px;color:rgba(57 219 191);" class="fa-solid fa-star"></i>
+                <i id="startwo" style="margin:5px;font-size: 19px;" class="fa-solid fa-star"></i>
+                <i id="starthree" style="margin:5px;font-size: 19px;" class="fa-solid fa-star"></i>
+                <i id="starfour" style="margin:5px;font-size: 19px;" class="fa-solid fa-star"></i>
+                <i id="starfive" style="margin:5px;font-size: 19px;" class="fa-solid fa-star"></i>
+            </button>
+            <button id="ratewebsiteCloseS" style="margin-top: 10px;" class="hover">إرسال</button>
+        </div>
+        <div id="ratewebsiteClose" class="wadget-btn-close"></div>
+    </div>
+    <div class="welcome-box" id="WelcomeBox">
+        <div>
+            <img src="./Pictures/Logo.png">
+            <span class="loader"></span>
+        </div>
+    </div>
+    <div class="Lodding" id="Lodding">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="LoginBox" class="login-box">
+        <div class="login-box-content">
+            <img src="./Pictures/Logo.png">
+            <form action="">
+                <input maxlength="20" required name="User" type="text" id="UserName" placeholder="أسم المستخدم">
+                <input maxlength="35" required name="Email" type="email" id="UserEmail" placeholder="البريد الاكتروني">
+                <input type="submit" class="save" id="SaveBtn" value="التسجيل الأن">
+            </form>
+        </div>
+    </div>
+    <section style="display: block;" id="MatchPage">
+        <div class="match-header">
+            <button class="hover" id="MenuBtnMatchHeader">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            السبت , 2025/01/25
+        </div>
+        <div style="font-size: 13px;" class="match-box">
+            <div style="justify-content: end;" class="match-info">
+                <p>محمود عمرو</p>
+                <img src="./Pictures/mahmod.png">
+            </div>
+            <div style="font-size: 15px;" class="match-result">
+                <p> </p>
+                <p>قريباً</p>
+                <p> </p>
+            </div>
+            <div style="justify-content: start;" class="match-info">
+                <img src="./Pictures/mosah.png">
+                <p>إبراهيم موسي</p>
+            </div>
+        </div>
+        <div style="font-size: 13px;" class="match-box">
+            <div style="justify-content: end;" class="match-info">
+                <p>زين علام</p>
+                <img src="./Pictures/zain.png">
+            </div>
+            <div style="font-size: 15px;" class="match-result">
+                <p> </p>
+                <p>قريباً</p>
+                <p> </p>
+            </div>
+            <div style="justify-content: start;" class="match-info">
+                <img src="./Pictures/emad.png">
+                <p>عماد سلامة</p>
+            </div>
+        </div>
+        <div class="match-header">
+            <button class="hover" id="MenuBtnMatchHeader">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            الأحد , 2025/01/26
+        </div>
+        <div style="font-size: 13px;" class="match-box">
+            <div style="justify-content: end;" class="match-info">
+                <p>محمد شريف</p>
+                <img src="./Pictures/shefo.png">
+            </div>
+            <div style="font-size: 15px;" class="match-result">
+                <p> </p>
+                <p>قريباً</p>
+                <p> </p>
+            </div>
+            <div style="justify-content: start;" class="match-info">
+                <img src="./Pictures/kelane.png">
+                <p>الكيلاني</p>
+            </div>
+        </div>
+        <div class="match-header">
+            <button class="hover" id="MenuBtnMatchHeader">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            الله أعلم
+        </div>
+        <div style="font-size: 13px;" class="match-box">
+            <div style="justify-content: end;" class="match-info">
+                <p>حازم محمد</p>
+                <img src="./Pictures/hazem.jpg">
+            </div>
+            <div style="font-size: 15px;" class="match-result">
+                <p> </p>
+                <p>قريباً</p>
+                <p> </p>
+            </div>
+            <div style="justify-content: start;" class="match-info">
+                <img src="./Pictures/elboraey.png">
+                <p>أحمد البرعي</p>
+            </div>
+        </div>
+    </section>
+    <section id="NewsPage">
+        <div class="news-box">
+            <div class="news-info">
+                <p class="news-title">.الماتش بتاعي هيتأجل شويه معلش</p>
+                <p class="news-date">2025/1/25 ,09:42</p>
+            </div>
+            <img src="./Pictures/hazem.jpg">
+        </div>
+        <button class="add-massage-btn" id="AddMassageBtn"><i class="fa-solid fa-plus"></i></button>
+    </section>
+    <section id="RankPage">
+        <div class="match-rank-box-main">
+            <div class="match-rank-box-title">
+                <div class="count">نقاط</div>
+                <div class="count">خ</div>
+                <div class="count">ت</div>
+                <div class="count">ف</div>
+                <div class="count">لعب</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4 style="margin-right: -2px;">الفريق</h4>
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>محمود عمرو</h4>
+                <img src="./Pictures/mahmod.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>محمد شريف</h4>
+                <img src="./Pictures/shefo.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>أحمد البرعي</h4>
+                <img src="./Pictures/elboraey.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>إبراهيم موسي</h4>
+                <img src="./Pictures/mosah.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>الكيلاني</h4>
+                <img src="./Pictures/kelane.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>زين علام</h4>
+                <img src="./Pictures/zain.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>عماد سلامة</h4>
+                <img src="./Pictures/emad.png">
+            </div>
+        </div>
+        <div class="match-rank-box">
+            <div class="match-rank-box-title">
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+                <div class="count">0</div>
+            </div>
+            <div class="match-rank-box-title-info">
+                <h4>حازم محمد</h4>
+                <img src="./Pictures/hazem.jpg">
+            </div>
+        </div>
+    </section>
+    <section id="SettingPage">
+        <div class="setting-header">
+            <div class="setting-user-info" id="SettingUserInfo">
+                <div>
+                    <h4 id="UserNameSetting" style="color:rgba(57 219 191);">جار التحميل</h4>
+                    <h5 id="UserEmailSetting">جار التحميل</h5>
+                </div>
+                <div class="image-box">
+                    <input style="display: none;" type="file" id="file-input">
+                    <label id="FileinputLabel" for="file-input"><i class="fa-solid fa-camera"></i></label>
+                    <img id="selected-image" src="./Pictures/match image.png" alt="جار التحميل">
+                </div>
+            </div>
+            <div style="display: flex;justify-content: space-between;" class="setting-user-info"
+                id="SettingUserSuggest">
+                <button class="Login-btn" id="LoginBtn">تسجيل الدخول</button>
+                <div class="image-box">
+                    <img src="./Pictures/match image.png" alt="جار التحميل">
+                </div>
+            </div>
+        </div>
+        <h3 class="setting-title">إعداداتي</h3>
+        <button class="setting-btn">
+            <label class="switch">
+                <input id="DarkModecheckbox" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <div class="setting-btn-content">
+                <p>الوضع الليلي</p>
+                <i class="fa-regular fa-moon"></i>
+            </div>
+        </button>
+        <button class="setting-btn">
+            <label class="switch">
+                <input id="notificationcheckbox" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <div class="setting-btn-content">
+                <p>الإشعارات</p>
+                <i class="fa-regular fa-bell"></i>
+            </div>
+        </button>
+        <button class="setting-btn" id="languageBtn">
+            <i class="fa-solid fa-angle-left"></i>
+            <div class="setting-btn-content">
+                <p>اللغة</p>
+                <i class="fa-solid fa-globe"></i>
+            </div>
+        </button>
+        <button class="setting-btn" id="FontSizeBtn">
+            <i class="fa-solid fa-angle-left"></i>
+            <div class="setting-btn-content">
+                <p>حجم الخط</p>
+                <i class="fa-solid fa-text-height"></i>
+            </div>
+        </button>
+        <h3 class="setting-title">التطبيق</h3>
+        <button class="setting-btn" id="capyweblinkbtn">
+            <i></i>
+            <div class="setting-btn-content">
+                <p>مشاركة التطبيق</p>
+                <i class="fa-solid fa-share-nodes"></i>
+            </div>
+        </button>
+        <button class="setting-btn">
+            <i></i>
+            <div class="setting-btn-content" id="ratewebsitebtn">
+                <p>تقييم التطبيق</p>
+                <i class="fa-solid fa-star"></i>
+            </div>
+        </button>
+        <button class="setting-btn" id="contactmeboxbtn">
+            <i></i>
+            <div class="setting-btn-content">
+                <p>اتصال بنا</p>
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+        </button>
+        <button class="setting-btn">
+            <div class="social-box">
+                <a href="https://www.instagram.com/hazem_xd_99/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/HazemMuhammed2002/"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://twitter.com/HsnHazm75508"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+            <div class="setting-btn-content">
+                <p style="color:rgba(57 219 191);">حسابات التواصل</p>
+            </div>
+        </button>
+        <button style="display: none;" class="setting-btn" id="SignOut">
+            <i></i>
+            <div class="setting-btn-content">
+                <p>تسجيل الخروج</p>
+                <i style="color:rgba(255 0 0);" class="fa-solid fa-arrow-right-from-bracket"></i>
+            </div>
+        </button>
+        <div class="hide"></div>
+    </section>
+    <div class="setting-box" id="languagebox">
+        <div class="setting-box-header">
+            <div></div>
+            <button id="languageBtnclose" class="header-title">
+                <p>اللغة</p>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+        <h1 id="heading">السلام عليكم</h1>
+        <label>
+            <input checked type="radio" name="language" value="arabic" onclick="changeLanguage(this.value)">
+            <p>العربية</p>
+        </label>
+        <label>
+            <input type="radio" name="language" value="english" onclick="changeLanguage(this.value)">
+            <p>English</p>
+        </label>
+    </div>
+    <div class="setting-box" id="FontSizebox">
+        <div class="setting-box-header">
+            <div></div>
+            <button id="FontSizeBtnclose" class="header-title">
+                <p>حجم الخط</p>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+        <label>
+            <input type="radio" id="biginput" onclick="bigfont()">
+            <div style="align-items: center;display: flex; font-size: larger;">
+                <p>كبير</p>
+                <i style="margin-left: 10px;" class="fa-solid fa-font"></i>
+            </div>
+        </label>
+        <label>
+            <input type="radio" id="normalinput" onclick="normalfont()">
+            <div style="align-items: center;display: flex; font-size: medium;">
+                <p>متوسط</p>
+                <i style="margin-left: 10px;" class="fa-solid fa-font"></i>
+            </div>
+        </label>
+        <label>
+            <input type="radio" id="smallinput" onclick="smallfont()">
+            <div style="align-items: center;display: flex; font-size:14px;">
+                <p>صغير</p>
+                <i style="margin-left: 10px;" class="fa-solid fa-font"></i>
+            </div>
+        </label>
+    </div>
+    <footer>
+        <button id="SettingPageBtn">
+            <i class="fa-solid fa-ellipsis"></i>
+        </button>
+        <button id="RankPageBtn">
+            <i class="fa-solid fa-chart-simple"></i>
+        </button>
+        <button id="NewsPageBtn">
+            <i class="fa-regular fa-newspaper"></i>
+        </button>
+        <button id="MatchPageBtn" style="color:rgba(57 219 191);">
+            <i class="fa-solid fa-futbol"></i>
+        </button>
+    </footer>
+    <script src="./JS/main.js"></script>
+</body>
+
+</html>
