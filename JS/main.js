@@ -428,6 +428,14 @@ Massageclosebtnfull.onclick = function () {
     AddMassageBox.style.display = "none";
 }
 
+let elnashra = document.getElementById("elnashra");
+setInterval(function () {
+    if (elnashra.innerHTML === `<p>وحـد الـلـه</p>`) {
+        elnashra.innerHTML = "<p>صـلـي عـلـي الـنـبـي</p>";
+    } else {
+        elnashra.innerHTML = `<p>وحـد الـلـه</p>`;
+    }
+}, 2000);
 Massageclosebtn.onclick = function () {
     AddMassageBox.style.display = "none";
 }
