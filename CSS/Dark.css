@@ -927,5 +927,5 @@ input:checked+.slider:before {
     text-align: center;
     justify-content: center;
     z-index: 9;
-    width: 200px;
+    width: 150px;
 }
