@@ -931,7 +931,7 @@ input:checked+.slider:before {
 
 .elnashra p{
     font-family: "cairo"; 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(0px);
     height: 100%;
     color: rgb(255, 255, 255);
     width: 100%;
@@ -939,6 +939,6 @@ input:checked+.slider:before {
     font-size: 1.0em;
     align-items: center;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.0);
     justify-content: center;
 }
